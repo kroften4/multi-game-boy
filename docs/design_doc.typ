@@ -9,7 +9,7 @@
     *MultiGameBoy* (title WIP)\
   ]
   text(size: 13pt, )[
-    DIY Multiplayer Game Boar Design Document
+    DIY Multiplayer Game Console Design Document
   ]
 }
 #outline()

@@ -1,5 +1,5 @@
 # MultiGameBoy (title WIP)
-DIY Multiplayer Game Boar Design Document
+DIY Multiplayer Game Console Design Document
 
 # Компоненты
 
