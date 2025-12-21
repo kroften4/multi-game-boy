@@ -1,8 +1,7 @@
 #ifndef __AABB_H__
 #define __AABB_H__
 
-#include <TFT_eSPI.h>
-
+#include "gfx.hpp"
 struct AABB
 {
     int x;
@@ -11,7 +10,7 @@ struct AABB
     int h;
     int dx;
     int dy;
-    int color;
+    Gfx::Palette color;
 };
 
 #endif // __AABB_H__
