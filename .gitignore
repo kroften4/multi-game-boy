@@ -1,3 +1,5 @@
 .*
 !.gitignore
+!.clang-tidy
+!.clangd
 compile_commands.json
