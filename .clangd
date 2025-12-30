@@ -5,18 +5,13 @@ CompileFlags:
     -Dssize_t=long,
     -D_SSIZE_T_DECLARED,
     -Wno-unknown-warning-option
+    -mlong-calls,
   ]
   Remove: [
-    -mlong-calls,
-    -fno-tree-switch-conversion,
-    -mtext-section-literals,
     -mlongcalls,
+    -fno-tree-switch-conversion,
+    -fno-shrink-wrap,
     -fstrict-volatile-bitfields,
-    -free,
-    -fipa-pta,
-    -march=*,
-    -mabi=*,
-    -mcpu=*
   ]
 Diagnostics:
   Suppress: "pp_including_mainfile_in_preamble"
