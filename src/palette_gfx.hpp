@@ -1,11 +1,11 @@
-#ifndef __GFX_H__
-#define __GFX_H__
+#ifndef __PALETTE_GFX_H__
+#define __PALETTE_GFX_H__
 
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <cstdint>
 #include <cstring>
-namespace Gfx
+namespace PaletteGfx
 {
 
 enum Palette : uint8_t
@@ -100,4 +100,4 @@ class Gfx
 
 } // namespace Gfx
 
-#endif // __GFX_H__
+#endif // __PALETTE_GFX_H__

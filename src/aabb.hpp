@@ -1,7 +1,6 @@
 #ifndef __AABB_H__
 #define __AABB_H__
 
-#include "gfx.hpp"
 struct AABB
 {
     int x;
@@ -10,7 +9,7 @@ struct AABB
     int h;
     int dx;
     int dy;
-    Gfx::Palette color;
+    int color;
 };
 
 #endif // __AABB_H__

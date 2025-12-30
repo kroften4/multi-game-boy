@@ -1,6 +1,6 @@
 #include "aabb.hpp"
 #include "component_pool.hpp"
-#include "gfx.hpp"
+#include "lowres_gfx.hpp"
 #include <Arduino.h>
 #include <Esp.h>
 #include <TFT_eSPI.h>
@@ -8,11 +8,11 @@
 void draw();
 void move();
 
-ComponentPool<AABB> aabbs{ 2 };
+ComponentPool<AABB> aabbs{ 12 };
 
 int width = 480;
 int height = 320;
-Gfx::Gfx *screen;
+LowresGfx::Gfx *screen;
 
 void printEspInfo();
 
@@ -28,20 +28,20 @@ void setup(void)
     int dx = 2;
     int dy = 2;
 
-    screen = new Gfx::Gfx(width, height);
+    screen = new LowresGfx::Gfx(width, height);
 
-    AABB player1 = { 90, 10, size_x, size_y, 1, 1, Gfx::RED };
-    AABB player2 = { 80, 20, size_x, size_y, 2, 4, Gfx::ORANGE };
-    AABB player3 = { 70, 30, size_x, size_y, 3, 3, Gfx::YELLOW };
-    AABB player4 = { 60, 40, size_x, size_y, 4, 2, Gfx::GREEN };
-    AABB player5 = { 50, 50, size_x, size_y, 1, 1, Gfx::BLUE };
-    AABB player6 = { 40, 60, size_x, size_y, 2, 4, Gfx::BROWN };
-    AABB player7 = { 30, 70, size_x, size_y, 3, 3, Gfx::RED };
-    AABB player8 = { 20, 80, size_x, size_y, 4, 2, Gfx::ORANGE };
-    AABB player9 = { 10, 90, size_x, size_y, 1, 1, Gfx::GREEN };
-    AABB player10 = { 100, 0, size_x, size_y, dx - 1, dy - 1, Gfx::BLUE };
-    AABB player11 = { 100, 0, size_x, size_y, dx * 4, dy * 4, Gfx::GREEN };
-    AABB player12 = { 100, 0, size_x, size_y, dx * 2, dy * 2, Gfx::BLACK };
+    AABB player1 = { 90, 10, size_x, size_y, 1, 1, TFT_RED };
+    AABB player2 = { 80, 20, size_x, size_y, 2, 4, TFT_ORANGE };
+    AABB player3 = { 70, 30, size_x, size_y, 3, 3, TFT_YELLOW };
+    AABB player4 = { 60, 40, size_x, size_y, 4, 2, TFT_GREEN };
+    AABB player5 = { 50, 50, size_x, size_y, 1, 1, TFT_BLUE };
+    AABB player6 = { 40, 60, size_x, size_y, 2, 4, TFT_BROWN };
+    AABB player7 = { 30, 70, size_x, size_y, 3, 3, TFT_RED };
+    AABB player8 = { 20, 80, size_x, size_y, 4, 2, TFT_ORANGE };
+    AABB player9 = { 10, 90, size_x, size_y, 1, 1, TFT_GREEN };
+    AABB player10 = { 100, 0, size_x, size_y, dx - 1, dy - 1, TFT_BLUE };
+    AABB player11 = { 100, 0, size_x, size_y, dx * 3, dy * 4, TFT_GREEN };
+    AABB player12 = { 100, 0, size_x, size_y, dx * 2, dy * 2, TFT_BLACK };
     aabbs.add(player1);
     aabbs.add(player2);
     aabbs.add(player3);
@@ -93,11 +93,11 @@ void move()
 
 void draw()
 {
-    screen->fillRect(0, 0, screen->width, screen->height, Gfx::Palette::WHITE);
+    screen->fillRect(0, 0, screen->width, screen->height, screen->tft.color16to8(TFT_WHITE));
     // Serial.println("cleared canvas");
     for (int i = 0; i < aabbs.size; i++) {
         auto aabb = aabbs.components[i];
-        screen->fillRect(aabb.x, aabb.y, aabb.w, aabb.h, aabb.color);
+        screen->fillRect(aabb.x, aabb.y, aabb.w, aabb.h, screen->tft.color16to8(aabb.color));
         // Serial.println("filled aabb " + String(i));
     }
     screen->push();
