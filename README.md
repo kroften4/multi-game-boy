@@ -9,31 +9,45 @@ DIY Multiplayer Game Pad
 1. Install ESP-IDF ([guide](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html))
 1. Run
    ```bash
-   . $HOME/esp/esp-idf/export.sh
+   . export.sh
    ``` 
    or, if you use fish
    ```bash
-   . $HOME/esp/esp-idf/export.fish
+   . export.fish
    ``` 
+   This will export the required ESP-IDF's tools and environment variables
+   
+   If you are using neovim with mason, it can override the `clangd` LSP server
+   executable. To use the correct one, configure mason to *append* instead of
+   *prepend* it's binaries to PATH:
+   ```lua
+   require("mason").setup({
+      -- put system's binaries first
+      PATH = "append",
+   })
+   ```
+   You can check if neovim is using the correct `clangd` executable by running
+   `:which clangd`
 1. Install `esp-clang`
    ```bash
    idf_tools.py install esp-clang
    ```
+   This will install a specific clang version suitable for ESP-IDF.
 1. Run
    ```bash
    idf.py build
    ```
-   It will generate `build/compile_commands.json` which is used by clangd LSP
+   This will generate `build/compile_commands.json` which is used by clangd LSP
    server
 
 ## Run
 Before doing anything, export ESP-IDF tools:
 ```bash
-. $HOME/esp/esp-idf/export.sh
+. export.sh
 ``` 
 or, if you use fish
 ```bash
-. $HOME/esp/esp-idf/export.fish
+. export.fish
 ``` 
 
 - Compile the project
@@ -78,6 +92,8 @@ g. esp32) apply when building for the specified target and override
   ```bash
   idf.py create-componenet -C components my_component_name
   ```
+  It is important to put all components in `components/` directory, otherwise
+  they are not recognized
 
 - Set target
   ```bash
