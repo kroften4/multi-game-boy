@@ -1,87 +1,85 @@
 # MultiGameBoy (title WIP)
-DIY Multiplayer Game Console Design Document
+DIY Multiplayer Game Pad
 
-# Компоненты
+[Design doc](https://typst.app/project/wWPyvWHVRvhnejkS593nv4)
 
-## Корпус
+# Developing
 
-3d print
+## Install
+1. Install ESP-IDF ([guide](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html))
+1. Run
+   ```bash
+   . $HOME/esp/esp-idf/export.sh
+   ``` 
+   or, if you use fish
+   ```bash
+   . $HOME/esp/esp-idf/export.fish
+   ``` 
+1. Install `esp-clang`
+   ```bash
+   idf_tools.py install esp-clang
+   ```
+1. Run
+   ```bash
+   idf.py build
+   ```
+   It will generate `build/compile_commands.json` which is used by clangd LSP
+   server
 
-## Дисплей
+## Run
+Before doing anything, export ESP-IDF tools:
+```bash
+. $HOME/esp/esp-idf/export.sh
+``` 
+or, if you use fish
+```bash
+. $HOME/esp/esp-idf/export.fish
+``` 
 
-TFT LCD ~3.5in с параллельным интерфейсом
+- Compile the project
+    ```bash
+    idf.py build
+    ```
+- Clean `build/` directory
+    ```bash
+    idf.py clean
+    ```
+- Flash the chip (also builds if necessary)
+    ```bash
+    idf.py flash
+    ```
+- USB monitor (`C-]` to quit)
+    ```bash
+    idf.py monitor
+    ```
+- Flash and monitor
+    ```bash
+    idf.py flash monitor
+    ```
 
-?[TFT\_eSPI](https://github.com/Bodmer/TFT_eSPI) библиотека (👍 для ESP32 поддержка 8bit-parallel без DMA) (нужен дисплей с контроллером который поддерживается ей)
+## Configuration
+### SDK config
+`sdkconfig` is a local auto-generated file which contains the full SDK
+configuration. To edit, run
+```bash
+idf.py menuconfig
+```
+The changes will be saved locally
 
-## Кнопки/Управление
+`sdkconfig.defaults*` files specify default options for `sdkconfig`. If changed,
+remove `sdkconfig` file and rebuild to apply changes.
 
-мембранка/готовые четверные кнопки
+`sdkconfig.defaults.<target>`, where `<target>` is from `idf.py set-target` (e.
+g. esp32) apply when building for the specified target and override
+`sdkconfig.defaults` settings
 
-## Звук
+### Miscellaneous
+- Create component
+  ```bash
+  idf.py create-componenet -C components my_component_name
+  ```
 
-SID модуль (крутые 8битные мелодии, но мб это устаревшее)\
-[https://youtu.be/LSMQ3U1Thzw?si=DHHx-LF8a\_1jlMix](https://youtu.be/LSMQ3U1Thzw?si=DHHx-LF8a_1jlMix)
-
-Динамик + усилитель (не знаю как звучит)
-
-## Аккумулятор
-
-Разъемы под обычные батарейки / аккум как в квадракоптерах
-
-Стабилизатор питания?
-
-Type-C разъем для зарядки?
-
-## Микроконтроллер
-
-Если esp32 не справится можно попробовать raspberry pi zero / посмотреть репку
-
-## ?MicroSD карта + слот
-
-(Доп) Мб загрузка игр+сохранений через нее
-
-## Остальное
-
-- Плата+провода, как соединить готовый продукт (perfboard/PCB)
-- Вкл/Выкл
-
-# Логика
-
-## Boot up
-
-## Network connection
-
-Подключение по WiFi (Можно развернуть удаленно сервер / по локальной сети, сервер на одной из приставок/отдельном девайсе)
-
-## Device interfaces
-
-## Server
-
-## Game Logic
-
-Библиотеки для ECS на C++ / написать простую самим
-
-Можно для начала портировать готовый понг / сделать змейку/тетрис
-
-### Кастомная игра
-
-Coop + friendly fire\
-OP оружия но легко убить тиммейта
-
-- ядерная пушка, огромный взрыв оставляет яд на полу
-- огнемет, поджигает деревянный пол
-- что-то типа fossilized gun из EtG
-- awp с рикошетом
-- homing missile которая может полететь за игроком
-- щит который блокирует атаки игрока тоже, рикошет внутри щита
-- баффы которые накладываются и на мобов
-
-Для MVP только мувмент, спавн противников в одной комнате и одна пушка
-
-# Возможные идеи
-
-- Меню для подключения к другому устройству, выбор игры
-- Запись сохранений в встроенный ROM/MicroSD
-- Микрофон
-- Тематичные кнопки (как на удлинителе, тумблер как в поезде)
-- Rust/ESP-IDF вместо ардуино
+- Set target
+  ```bash
+  idf.py set-target esp32
+  ```

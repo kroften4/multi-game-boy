@@ -1,17 +1,7 @@
 CompileFlags:
-  Add: [
-    -DSSIZE_MAX,
-    -DLWIP_NO_UNISTD_H=1,
-    -Dssize_t=long,
-    -D_SSIZE_T_DECLARED,
-    -Wno-unknown-warning-option
-    -mlong-calls,
-  ]
   Remove: [
     -mlongcalls,
-    -fno-tree-switch-conversion,
     -fno-shrink-wrap,
     -fstrict-volatile-bitfields,
+    -fno-tree-switch-conversion,
   ]
-Diagnostics:
-  Suppress: "pp_including_mainfile_in_preamble"
