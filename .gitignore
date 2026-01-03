@@ -1,7 +1,9 @@
 .*
 !.gitignore
-!.clang-tidy
 !.clangd
+!.clang-tidy
+!.clang-format
+!.editorconfig
 
 build/
 sdkconfig

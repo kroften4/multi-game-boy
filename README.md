@@ -54,9 +54,12 @@ or, if you use fish
     ```bash
     idf.py build
     ```
-- Clean `build/` directory
+- Clean build outputs
     ```bash
     idf.py clean
+    ```
+    ```bash
+    idf.py fullclean
     ```
 - Flash the chip (also builds if necessary)
     ```bash
@@ -83,8 +86,8 @@ The changes will be saved locally
 `sdkconfig.defaults*` files specify default options for `sdkconfig`. If changed,
 remove `sdkconfig` file and rebuild to apply changes.
 
-`sdkconfig.defaults.<target>`, where `<target>` is from `idf.py set-target` (e.
-g. esp32) apply when building for the specified target and override
+`sdkconfig.defaults.<target>` where `<target>` is from `idf.py set-target` (e.
+g. `esp32`) apply when building for the specified target and override
 `sdkconfig.defaults` settings
 
 ### Miscellaneous

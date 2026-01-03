@@ -1,3 +1,4 @@
+#include "config.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <freertos/FreeRTOS.h>
@@ -11,8 +12,7 @@ static void taskBlink(void *)
 
 	while (1) {
 		printf("Task %s on core %d\n",
-		       pcTaskGetName(xTaskGetCurrentTaskHandle()),
-		       xPortGetCoreID());
+			   pcTaskGetName(xTaskGetCurrentTaskHandle()), xPortGetCoreID());
 		led_state = !led_state;
 		gpio_set_level(GPIO_NUM_2, led_state);
 		vTaskDelay(pdMS_TO_TICKS(1000));
