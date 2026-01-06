@@ -1,5 +1,13 @@
 .*
 !.gitignore
-!.clang-tidy
 !.clangd
+!.clang-tidy
+!.clang-format
+!.editorconfig
+
 compile_commands.json
+
+# for ESP-IDF
+build/
+sdkconfig
+sdkconfig.old
