@@ -16,14 +16,12 @@ struct AABB
     int16_t dy;
 };
 
-void AABB_render(TFT_eSprite &buf, ComponentPool<AABB> &aabbs)
+void AABB_draw(TFT_eSprite &buf, ComponentPool<AABB> &aabbs)
 {
-    buf.fillSprite(TFT_WHITE);
     for (int i = 0; i < aabbs.size; i++) {
         auto aabb = aabbs.components[i];
         buf.fillRect(aabb.x, aabb.y, aabb.w, aabb.h, buf.color16to8(aabb.color));
     }
-    buf.pushSprite(0, 0);
 }
 
 void AABB_bounce(ComponentPool<AABB> &aabbs, int width, int height)
@@ -51,7 +49,8 @@ void AABB_bounce(ComponentPool<AABB> &aabbs, int width, int height)
     }
 }
 
-void AABB_randomSpawn(ComponentPool<AABB> &aabbs, int amount, int width, int height)
+void AABB_randomSpawn(ComponentPool<AABB> &aabbs, int amount,
+                      int areaWidth, int areaHeight, int size)
 {
     // int colors[] = { TFT_BLACK, TFT_NAVY, TFT_DARKGREEN, TFT_DARKCYAN,
     //                  TFT_MAROON, TFT_PURPLE, TFT_OLIVE, TFT_LIGHTGREY,
@@ -60,9 +59,8 @@ void AABB_randomSpawn(ComponentPool<AABB> &aabbs, int amount, int width, int hei
     //                  TFT_GREENYELLOW, TFT_PINK, TFT_BROWN, TFT_GOLD, TFT_SILVER,
     //                  TFT_SKYBLUE, TFT_VIOLET };
     for (int i = 0; i < amount; i++) {
-        int32_t posX = rand() % width - 30;
-        int32_t posY = rand() % height - 30;
-        int32_t size = rand() % 10 + 5;
+        int32_t posX = rand() % areaWidth - 30;
+        int32_t posY = rand() % areaHeight - 30;
         int16_t velX = rand() % 8 + 1;
         int16_t velY = rand() % 8 + 1;
         AABB player = { default_4bit_palette[rand() % 16],
