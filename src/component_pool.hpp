@@ -18,9 +18,10 @@ struct ComponentPool
         delete[] components;
     };
 
-    void add(T item)
+    int add(T item)
     {
-        components[size++] = item;
+        components[size] = item;
+        return size++;
     };
 };
 
