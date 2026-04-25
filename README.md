@@ -9,11 +9,11 @@ DIY Multiplayer Game Pad
 1. Install ESP-IDF ([guide](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html))
 1. Run
    ```bash
-   . export.sh
+   . export.sh [path/to/esp/export/script]
    ``` 
    or, if you use fish
    ```bash
-   . export.fish
+   . export.fish [path/to/esp/export/script]
    ``` 
    This will export the required ESP-IDF's tools and environment variables
    
@@ -27,12 +27,13 @@ DIY Multiplayer Game Pad
    })
    ```
    You can check if neovim is using the correct `clangd` executable by running
-   `:which clangd`
+   `:!which clangd`
 1. Install `esp-clang`
    ```bash
    idf_tools.py install esp-clang
    ```
-   This will install a specific clang version suitable for ESP-IDF.
+   This will install a specific clang version suitable for ESP-IDF. Make sure to
+   reapply the prevoius export.
 1. Run
    ```bash
    idf.py build
@@ -40,7 +41,7 @@ DIY Multiplayer Game Pad
    This will generate `build/compile_commands.json` which is used by clangd LSP
    server
 
-## Run
+## Build & Run
 Before doing anything, export ESP-IDF tools:
 ```bash
 . export.sh
