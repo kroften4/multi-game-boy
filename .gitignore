@@ -4,6 +4,7 @@
 !.clang-tidy
 !.clang-format
 !.editorconfig
+compile_commands.json
 
 build/
 sdkconfig
