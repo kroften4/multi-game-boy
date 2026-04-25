@@ -1,7 +1,7 @@
-#include "aabb.hpp"
-#include "button.hpp"
-#include "component_pool.hpp"
-#include "utils.hpp"
+#include "game/aabb.hpp"
+#include "input/button.hpp"
+#include "game/component_pool.hpp"
+#include "utils/utils.hpp"
 #include <Arduino.h>
 #include <Esp.h>
 #include <TFT_eSPI.h>
