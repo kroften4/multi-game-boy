@@ -1,8 +1,8 @@
 #include "config.h"
-#include <stdint.h>
-#include <stdio.h>
 #include <freertos/FreeRTOS.h>
 #include <driver/gpio.h>
+#include <stdint.h>
+#include <stdio.h>
 
 static void taskBlink(void *)
 {
