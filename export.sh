@@ -9,4 +9,4 @@ fi
 
 # https://github.com/espressif/clang-tidy-runner/issues/32
 # this fixes everything
-IDF_TOOLCHAIN=clang 
+export IDF_TOOLCHAIN=clang 
