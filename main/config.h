@@ -2,21 +2,30 @@
 #define _CONFIG_LOADED
 
 /** LCD ILI9486 */
-#define DISPLAY_WIDTH 480
-#define DISPLAY_HEIGHT 320
-// #define DISPLAY_RGB_ORDER DISPLAY_BGR
-#define DISPLAY_RD 17
-#define DISPLAY_WR 16
-#define DISPLAY_DC 4 // RS pin
-#define DISPLAY_CS 2
-#define DISPLAY_RST 15
-#define DISPLAY_D0 5
-#define DISPLAY_D1 18
-#define DISPLAY_D2 13
-#define DISPLAY_D3 12
-#define DISPLAY_D4 14
-#define DISPLAY_D5 27
-#define DISPLAY_D6 26
-#define DISPLAY_D7 25
+#define DISPLAY_W_RES 480
+#define DISPLAY_H_RES 320
+
+#define DISPLAY_DMA_BURST_SIZE 512
+
+#define DISPLAY_CMD_BITS 16
+#define DISPLAY_PARAM_BITS 16
+
+// MHz
+#define DISPLAY_PIXEL_CLOCK_HZ 1024 * 1024 * 5
+
+#define DISPLAY_PIN_RD 17
+#define DISPLAY_PIN_WR 16
+#define DISPLAY_PIN_DC 4 // RS pin
+#define DISPLAY_PIN_CS 2
+#define DISPLAY_PIN_RST 15
+
+#define DISPLAY_PIN_D0 5
+#define DISPLAY_PIN_D1 18
+#define DISPLAY_PIN_D2 13
+#define DISPLAY_PIN_D3 12
+#define DISPLAY_PIN_D4 14
+#define DISPLAY_PIN_D5 27
+#define DISPLAY_PIN_D6 26
+#define DISPLAY_PIN_D7 25
 
 #endif

@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.gitmodules
 !.clangd
 !.clang-tidy
 !.clang-format
