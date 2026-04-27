@@ -1,3 +1,5 @@
+// TODO: move to Kconfig/sdkconfig
+
 #ifndef _CONFIG_LOADED
 #define _CONFIG_LOADED
 
@@ -7,11 +9,11 @@
 
 #define DISPLAY_DMA_BURST_SIZE 512
 
-#define DISPLAY_CMD_BITS 16
-#define DISPLAY_PARAM_BITS 16
+#define DISPLAY_CMD_BITS 8
+#define DISPLAY_PARAM_BITS 8
 
-// MHz
-#define DISPLAY_PIXEL_CLOCK_HZ 1024 * 1024 * 5
+// 50 MHz
+#define DISPLAY_PIXEL_CLOCK_HZ 1000000
 
 #define DISPLAY_PIN_RD 17
 #define DISPLAY_PIN_WR 16
