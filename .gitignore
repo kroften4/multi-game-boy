@@ -7,6 +7,9 @@
 !.editorconfig
 compile_commands.json
 
+# logic analyzer sessions
+data/
+
 build/
 sdkconfig
 sdkconfig.old

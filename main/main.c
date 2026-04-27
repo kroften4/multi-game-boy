@@ -11,6 +11,7 @@
 #include <soc/clk_tree_defs.h>
 #include <freertos/FreeRTOS.h>
 #include <driver/gpio.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <esp_lcd_io_i80.h>
 
@@ -70,8 +71,8 @@ static esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel)
 			.cs_active_high = 0,
 			.pclk_active_neg = 0,
 			.pclk_idle_low = 0,
-			// .reverse_color_bits = 0,
-			// .swap_color_bytes = 1,
+			.reverse_color_bits = 0,
+			.swap_color_bytes = 1,
 		}
 	};
 	ESP_ERROR_CHECK(esp_lcd_new_panel_io_i80(i80_bus, &io_config, &io_handle));
@@ -79,7 +80,7 @@ static esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel)
 
 	esp_lcd_panel_dev_config_t panel_config = {
 		.reset_gpio_num = DISPLAY_PIN_RST,
-		.rgb_ele_order = LCD_RGB_ELEMENT_ORDER_BGR,
+		// .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_BGR,
 		.bits_per_pixel = 16,
 	};
 
@@ -119,7 +120,8 @@ static esp_err_t displayBlink(void *)
 		ESP_LOGI(TAG, "Task %s on core %d",
 				 pcTaskGetName(xTaskGetCurrentTaskHandle()), xPortGetCoreID());
 		for (size_t color_idx = 0; color_idx < ARR_SIZE(colors); color_idx++) {
-			for (uint16_t i = 0; i < rect_w * rect_h; i++) {
+			ESP_LOGI(TAG, "color_idx %zu: %#06x", color_idx, colors[color_idx]);
+			for (size_t i = 0; i < rect_w * rect_h; i++) {
 				color_data[i] = colors[color_idx];
 			}
 			x_start = color_idx * rect_w;
