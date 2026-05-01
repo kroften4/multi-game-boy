@@ -5,11 +5,12 @@
 !.clang-tidy
 !.clang-format
 !.editorconfig
-compile_commands.json
+**/__cmake_systeminformation/
+**/build/
+**/build.clang/
 
 # logic analyzer sessions
 data/
 
-build/
 sdkconfig
 sdkconfig.old

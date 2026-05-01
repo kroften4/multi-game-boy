@@ -4,8 +4,8 @@
 #define _CONFIG_LOADED
 
 /** LCD ILI9486 */
-#define DISPLAY_W_RES 480
-#define DISPLAY_H_RES 320
+#define DISPLAY_H_RES 480
+#define DISPLAY_V_RES 320
 
 #define DISPLAY_DMA_BURST_SIZE 512
 

@@ -1,11 +1,20 @@
 CompileFlags:
   Remove: [
-    # was used for esp v5.5, seems to be fixed in v6.0
-    # -mlongcalls,
-    # -mlong-calls,
-    # '-fno-shrink-wrap',
-    # '-fstrict-volatile-bitfields',
-    # '-fno-tree-switch-conversion',
-    # '-fzero-init-padding-bits=all',
-    # '-fno-malloc-dce'
+    # if using gcc-generated compilation database (we are not since it fucks with includes heavily)
+    # -m*,
+    # -f*,
   ]
+
+---
+If:
+  PathExclude: .*/test/.*  # Main project files (exclude test subdir)
+CompileFlags:
+  CompilationDatabase: ./build.clang/ # Clang-generated compilation database (With IDF_TOOLCHAIN=clang variable set)
+
+---
+If:
+  PathMatch: .*/test/.*    # Test files (components/*test/* and test/*)
+CompileFlags:
+  CompilationDatabase: ./test/build.clang/
+
+---

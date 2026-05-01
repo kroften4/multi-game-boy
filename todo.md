@@ -1,10 +1,18 @@
 :!sort -r
-- 100 store data in indexed palette (or some other technique) and convert to 565 in partial buffer
-- 100 provide operations like fill_rect fill_screen etc.
-- 090 make the driver more configurable (display size, bgr, madctl, spi/parallel, etc.)
+- 100 structurize directories in main component
+- 100 for pong, just construct the buffer strip by strip, drawing all objects to the buffer (there are only like 3 or 4 objects) and send via DMA. make a spatial querying with quadtrees or something later. Stripe buffers should work great for DMA compared to dirty rects.
+- 100 be able to set rotation of the display
+- 095 figure out WIFI
+- 060 make the driver more configurable (display size, bgr, madctl, spi/parallel, etc.) and offload initialization logic to it (config structs may be better then  current KConfig)
+- 040 steal clang config from esp idf
 - 030 write a readme for patched driver
 - 030 lsp auto completion system includes do not use angle braces
+- 030 consider not using ESP-IDF's unity test runners as they do not allow for TEST_CASE's AND do not work with clang toolchain AND test run outputs are shit and do not show you anything useful
 - 020 adjust driver init sequence timings
 - 010 wire backlight to gpio and control it on init
+- 010 where do i keep the code for the games (firstly repo-wise, but in the future also device-wise, do i eventually make it possible to load a game via an SD card or something?)
 - 010 use Kconfig instead of sdkconfig.defaults?
 - 010 move config.h to sdkconfig
+- 010 convert scripts/ into single-file functions
+- 010 ATC drawing - its tile based, so just update prev and curr tile for each plane (maybe store additional info for each plane, like which tile was under it, for faster queries) (since there are so little screen updates i really could go overboard with sprites/animations/etc.)
+- 010 add script to fullclean build.clang/'s
