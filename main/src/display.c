@@ -1,27 +1,34 @@
+#include <driver/gpio.h>
 #include <esp_check.h>
-#include <freertos/idf_additions.h>
-#include <freertos/projdefs.h>
-#include <hal/gpio_types.h>
 #include <esp_err.h>
+#include <esp_lcd_io_i80.h>
 #include <esp_lcd_panel_dev.h>
 #include <esp_lcd_panel_ops.h>
 #include <esp_lcd_types.h>
 #include <esp_log.h>
 #include <freertos/FreeRTOS.h>
+#include <freertos/idf_additions.h>
+#include <freertos/projdefs.h>
+#include <hal/gpio_types.h>
 #include <soc/clk_tree_defs.h>
-#include <freertos/FreeRTOS.h>
-#include <driver/gpio.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <esp_lcd_io_i80.h>
 
-#include "esp_ili9486_panel.h"
-#include "display.h"
 #include "config.h"
+#include "display.h"
+#include "esp_ili9486_panel.h"
 
 static const char *TAG = "display";
 
-esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel)
+bool onTransDone(esp_lcd_panel_io_handle_t panel_io,
+				 esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
+{
+	TaskHandle_t draw_task = user_ctx;
+	xTaskNotifyGive(draw_task);
+	return true;
+}
+
+esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel, TaskHandle_t draw_task)
 {
 	// TODO: wire backlight to gpio and turn on only after init
 	gpio_reset_pin(DISPLAY_PIN_RD);
@@ -54,6 +61,8 @@ esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel)
 
 	esp_lcd_panel_io_handle_t io_handle = NULL;
 	esp_lcd_panel_io_i80_config_t io_config = {
+		.on_color_trans_done = onTransDone,
+		.user_ctx = draw_task,
 		.cs_gpio_num = DISPLAY_PIN_CS,
 		.pclk_hz = DISPLAY_PIXEL_CLOCK_HZ,
 		.trans_queue_depth = 10,

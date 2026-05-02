@@ -1,9 +1,7 @@
-#include "esp_heap_caps.h"
-#include "rasterizer.h"
-#include "vec.h"
 #include <driver/gpio.h>
 #include <esp_check.h>
 #include <esp_err.h>
+#include <esp_heap_caps.h>
 #include <esp_lcd_io_i80.h>
 #include <esp_lcd_panel_dev.h>
 #include <esp_lcd_panel_ops.h>
@@ -23,6 +21,8 @@
 #include "display_test.h"
 #include "rasterizer.h"
 #include "utils.h"
+#include "vec.h"
+#include <semaphore.h>
 
 static const char *TAG = "main";
 
@@ -47,9 +47,9 @@ void drawState(struct bitmap *bmp, struct vec screen_pos)
 		struct game_obj *obj = &game_objs[i];
 		struct vec obj_screen_pos =
 			world_to_screen_coords(screen_pos, obj->pos);
-		ESP_LOGI(TAG, "obj %d;%d -> %d;%d (screen %d;%d)", obj->pos.x,
-				 obj->pos.y, obj_screen_pos.x, obj_screen_pos.y, screen_pos.x,
-				 screen_pos.y);
+		// ESP_LOGI(TAG, "obj %d;%d -> %d;%d (screen %d;%d)", obj->pos.x,
+		// 		 obj->pos.y, obj_screen_pos.x, obj_screen_pos.y, screen_pos.x,
+		// 		 screen_pos.y);
 		rast_fillrect(bmp, obj_screen_pos.x, obj_screen_pos.y, obj->size.x,
 					  obj->size.y, obj->color);
 	}
@@ -66,12 +66,12 @@ void pushFrame(esp_lcd_panel_handle_t *panel)
 	const struct vec screen_pos = { 0, DISPLAY_V_RES };
 	struct vec stripe_pos = screen_pos;
 	uint16_t y_bottom = stripe_pos.y - DISPLAY_V_RES;
-	pixel_t color = rand() % 0xFFFF;
+	// pixel_t color = rand() % 0xFFFF;
 	while (stripe_pos.y > y_bottom) {
 		// drawRandomStripe(&stripe_bmp);
-		rast_fillrect(&stripe_bmp, 0, 0, stripe_bmp.size_x, stripe_bmp.size_y,
-					  color);
-		// drawState(&stripe_bmp, stripe_pos);
+		// rast_fillrect(&stripe_bmp, 0, 0, stripe_bmp.size_x, stripe_bmp.size_y,
+		// 			  color);
+		drawState(&stripe_bmp, stripe_pos);
 		struct vec stripe_screen_pos =
 			world_to_screen_coords(screen_pos, stripe_pos);
 		// ESP_LOGI(TAG, "stripe %d;%d -> %d;%d", stripe_pos.x, stripe_pos.y,
@@ -81,9 +81,9 @@ void pushFrame(esp_lcd_panel_handle_t *panel)
 		ESP_ERROR_CHECK(esp_lcd_panel_draw_bitmap(
 			*panel, 0, stripe_screen_pos.y, DISPLAY_H_RES,
 			stripe_screen_pos.y + LINES_IN_STRIPE, stripe_bmp.buf));
+		// TODO: add circular buffer
+		ulTaskNotifyTake(pdFALSE, pdMS_TO_TICKS(1000));
 		stripe_pos.y -= LINES_IN_STRIPE;
-		// TODO: wait for DMA with double buffering
-		// vTaskDelay(pdMS_TO_TICKS(1000));
 	}
 }
 
@@ -100,7 +100,9 @@ void app_main(void)
 							 "Failed to allocate stripe buffer");
 
 	esp_lcd_panel_handle_t panel = NULL;
-	ESP_ERROR_CHECK(displayInit(&panel));
+
+	TaskHandle_t draw_task = xTaskGetCurrentTaskHandle();
+	ESP_ERROR_CHECK(displayInit(&panel, draw_task));
 	esp_lcd_panel_swap_xy(panel, true);
 	ESP_LOGI(TAG, "Initialized display");
 
