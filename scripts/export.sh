@@ -2,7 +2,7 @@
 
 pushd $(dirname $0)
 
-export $(cat .env)
+export $(cat ../.env)
 source $IDF_EXPORT_SCRIPT
 
 popd

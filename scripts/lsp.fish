@@ -11,7 +11,7 @@ echo "###### BUILDING MAIN ######"
 IDF_TOOLCHAIN=clang idf.py -B build.clang build
 
 echo "###### BUILDING TEST ######"
-cd test
+cd ../test
 IDF_TOOLCHAIN=clang idf.py -B build.clang build
 
 popd
