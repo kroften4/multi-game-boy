@@ -57,8 +57,25 @@ TEST_CASE("Fill buf fully", "[rasterizer]")
 	// clang-format on
 	struct bitmap bmp = { buf, 7, 10 };
 	rast_fillrect(&bmp, 0, 0, bmp.size_x, bmp.size_y, 0x0000);
-	TEST_ASSERT(
-		bufs_equal(buf, ARR_SIZE(buf), buf_expected, ARR_SIZE(buf_expected), true));
+	TEST_ASSERT(bufs_equal(buf, ARR_SIZE(buf), buf_expected,
+						   ARR_SIZE(buf_expected), true));
+	// clang-format off
+	pixel_t buf_expected2[] = {
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+		0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0, 0x07e0,
+	};
+	// clang-format on
+	rast_fillrect(&bmp, 0, 0, bmp.size_x, bmp.size_y, 0x07e0);
+	TEST_ASSERT(bufs_equal(buf, ARR_SIZE(buf), buf_expected2,
+						   ARR_SIZE(buf_expected2), true));
 }
 
 TEST_CASE("Draw a single pixel on a bitmap", "[rasterizer]")
@@ -91,8 +108,8 @@ TEST_CASE("Draw a single pixel on a bitmap", "[rasterizer]")
 	// clang-format on
 	struct bitmap bmp = { buf, 7, 10 };
 	rast_fillrect(&bmp, 4, 8, 1, 1, 0x4321);
-	TEST_ASSERT(
-		bufs_equal(buf, ARR_SIZE(buf), buf_expected, ARR_SIZE(buf_expected), true));
+	TEST_ASSERT(bufs_equal(buf, ARR_SIZE(buf), buf_expected,
+						   ARR_SIZE(buf_expected), true));
 }
 
 TEST_CASE("Draw 2 rects on a bitmap", "[rasterizer]")
@@ -127,8 +144,8 @@ TEST_CASE("Draw 2 rects on a bitmap", "[rasterizer]")
 	// clang-format on
 	struct bitmap bmp = { buf, 7, 11 };
 	rast_fillrect(&bmp, 2, 1, 4, 6, 0xABCD);
-	TEST_ASSERT(
-		bufs_equal(buf, ARR_SIZE(buf), buf_expected, ARR_SIZE(buf_expected), false));
+	TEST_ASSERT(bufs_equal(buf, ARR_SIZE(buf), buf_expected,
+						   ARR_SIZE(buf_expected), false));
 	// clang-format off
 	pixel_t buf_expected2[] = {
 		0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
@@ -145,6 +162,6 @@ TEST_CASE("Draw 2 rects on a bitmap", "[rasterizer]")
 	};
 	// clang-format on
 	rast_fillrect(&bmp, 1, 5, 3, 5, 0x0123);
-	TEST_ASSERT(
-		bufs_equal(buf, ARR_SIZE(buf), buf_expected2, ARR_SIZE(buf_expected), false));
+	TEST_ASSERT(bufs_equal(buf, ARR_SIZE(buf), buf_expected2,
+						   ARR_SIZE(buf_expected), false));
 }
