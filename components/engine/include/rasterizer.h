@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define RGB565(r, g, b) (uint16_t)(((r>>3) << 11) | ((g>>2) << 5) | b >> 3)
+
 typedef uint16_t pixel_t;
 
 struct bitmap {
