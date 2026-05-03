@@ -1,0 +1,33 @@
+// TODO: move to Kconfig/sdkconfig
+
+#ifndef _CONFIG_LOADED
+#define _CONFIG_LOADED
+
+/** LCD ILI9486 */
+#define DISPLAY_H_RES 480
+#define DISPLAY_V_RES 320
+
+#define DISPLAY_DMA_BURST_SIZE 16384
+
+#define DISPLAY_CMD_BITS 8
+#define DISPLAY_PARAM_BITS 8
+
+// #define DISPLAY_PIXEL_CLOCK_HZ 1000000
+#define DISPLAY_PIXEL_CLOCK_HZ 13250000
+
+#define DISPLAY_PIN_RD 17
+#define DISPLAY_PIN_WR 16
+#define DISPLAY_PIN_DC 4 // RS pin
+#define DISPLAY_PIN_CS 2
+#define DISPLAY_PIN_RST 15
+
+#define DISPLAY_PIN_D0 5
+#define DISPLAY_PIN_D1 18
+#define DISPLAY_PIN_D2 13
+#define DISPLAY_PIN_D3 12
+#define DISPLAY_PIN_D4 14
+#define DISPLAY_PIN_D5 27
+#define DISPLAY_PIN_D6 26
+#define DISPLAY_PIN_D7 25
+
+#endif

@@ -1,8 +1,20 @@
 CompileFlags:
   Remove: [
-    # -mlongcalls,
-    # -mlong-calls,
-    -fno-shrink-wrap,
-    -fstrict-volatile-bitfields,
-    -fno-tree-switch-conversion,
+    # if using gcc-generated compilation database (we are not since it fucks with includes heavily)
+    # -m*,
+    # -f*,
   ]
+
+---
+If:
+  PathExclude: .*/test/.*  # Main project files (exclude test subdir)
+CompileFlags:
+  CompilationDatabase: ./build.clang/ # Clang-generated compilation database (With IDF_TOOLCHAIN=clang variable set)
+
+---
+If:
+  PathMatch: .*/test/.*    # Test files (components/*test/* and test/*)
+CompileFlags:
+  CompilationDatabase: ./test/build.clang/
+
+---

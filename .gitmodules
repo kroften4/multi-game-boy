@@ -1,0 +1,3 @@
+[submodule "components/ili9486-8bit-parallel"]
+	path = components/ili9486-8bit-parallel
+	url = https://github.com/kroften4/esp-lcd-ili9486-8bit-parallel

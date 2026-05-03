@@ -1,11 +1,16 @@
 .*
 !.gitignore
+!.gitmodules
 !.clangd
 !.clang-tidy
 !.clang-format
 !.editorconfig
-compile_commands.json
+**/__cmake_systeminformation/
+**/build/
+**/build.clang/
 
-build/
+# logic analyzer sessions
+data/
+
 sdkconfig
 sdkconfig.old
