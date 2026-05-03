@@ -17,12 +17,11 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "display.h"
 #include "display_test.h"
+#include "ili9486_display_init.h"
 #include "rasterizer.h"
 #include "utils.h"
 #include "vec.h"
-#include <semaphore.h>
 
 static const char *TAG = "main";
 
@@ -59,6 +58,14 @@ void drawRandomStripe(struct bitmap *bmp)
 {
 	rast_fillrect(bmp, 0, 0, bmp->size_x, bmp->size_y, rand() % 0xFFFF);
 	// rast_fillrect(bmp, 0, 0, bmp->size_x, bmp->size_y, 0x07e0);
+}
+
+bool onTransDone(esp_lcd_panel_io_handle_t panel_io,
+				 esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
+{
+	TaskHandle_t draw_task = user_ctx;
+	xTaskNotifyGive(draw_task);
+	return true;
 }
 
 void pushFrame(esp_lcd_panel_handle_t *panel)
@@ -102,7 +109,7 @@ void app_main(void)
 	esp_lcd_panel_handle_t panel = NULL;
 
 	TaskHandle_t draw_task = xTaskGetCurrentTaskHandle();
-	ESP_ERROR_CHECK(displayInit(&panel, draw_task));
+	ESP_ERROR_CHECK(displayInit(&panel, onTransDone, draw_task));
 	esp_lcd_panel_swap_xy(panel, true);
 	ESP_LOGI(TAG, "Initialized display");
 

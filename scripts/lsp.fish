@@ -7,11 +7,12 @@ pushd $(dirname (status filename))
 echo "###### SOURCING VENV ######"
 source export.fish
 
+cd ../
 echo "###### BUILDING MAIN ######"
 IDF_TOOLCHAIN=clang idf.py -B build.clang build
 
 echo "###### BUILDING TEST ######"
-cd ../test
+cd test
 IDF_TOOLCHAIN=clang idf.py -B build.clang build
 
 popd

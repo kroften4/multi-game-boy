@@ -20,15 +20,8 @@
 
 static const char *TAG = "display";
 
-bool onTransDone(esp_lcd_panel_io_handle_t panel_io,
-				 esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
-{
-	TaskHandle_t draw_task = user_ctx;
-	xTaskNotifyGive(draw_task);
-	return true;
-}
-
-esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel, TaskHandle_t draw_task)
+esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel,
+					  void *on_trans_done_user_ctx)
 {
 	// TODO: wire backlight to gpio and turn on only after init
 	gpio_reset_pin(DISPLAY_PIN_RD);
@@ -62,7 +55,7 @@ esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel, TaskHandle_t draw_task)
 	esp_lcd_panel_io_handle_t io_handle = NULL;
 	esp_lcd_panel_io_i80_config_t io_config = {
 		.on_color_trans_done = onTransDone,
-		.user_ctx = draw_task,
+		.user_ctx = on_trans_done_user_ctx,
 		.cs_gpio_num = DISPLAY_PIN_CS,
 		.pclk_hz = DISPLAY_PIXEL_CLOCK_HZ,
 		.trans_queue_depth = 10,
@@ -86,6 +79,7 @@ esp_err_t displayInit(esp_lcd_panel_handle_t *ret_panel, TaskHandle_t draw_task)
 												 &io_handle),
 						TAG, "Failed to initialize panel io");
 
+	// TODO: set ele order and endiannes here instead of reverse color bits/swap color bytes
 	esp_lcd_panel_dev_config_t panel_config = {
 		.reset_gpio_num = DISPLAY_PIN_RST,
 		// .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_BGR,
