@@ -1,18 +1,18 @@
 :!sort -r
-- 100 pong port: use rasterizer and display driver instead of SDL
-- 100 make the driver more configurable (display size, bgr, madctl, spi/parallel, etc.) and offload initialization logic to it
+- 100 pong port: stripe buffers are drawn as if all of them is the first stripe buffer. make client-only work.
 - 095 figure out WIFI (connect in project main, check that connected in game main)
 - 070 add circular buffering for DMA
 - 040 steal clang config from esp idf
-- 030 consider not using ESP-IDF's unity test runners as they do not allow for TEST_CASE's AND do not work with clang toolchain AND test run outputs are shit and do not show you anything useful
 - 030 write a readme for patched driver
 - 030 lsp auto completion system includes do not use angle braces
+- 030 consider not using ESP-IDF's unity test runners as they do not allow for TEST_CASE's AND do not work with clang toolchain AND test run outputs are shit and do not show you anything useful
 - 020 adjust driver init sequence timings
 - 010 wire backlight to gpio and control it on init
 - 010 where do i keep the games on the device, do i eventually make it possible to load a game via an SD card or something?
 - 010 move config.h to sdkconfig
+- 010 modify lsp script to reconfigure instead of build and be able to fullclean build.clang/'s
 - 010 figure out the bottleneck of bus clock frequency (display or wires or what)
 - 010 convert scripts/ into single-file functions
 - 010 ATC drawing - its tile based, so just update prev and curr tile for each plane (maybe store additional info for each plane, like which tile was under it, for faster queries) (since there are so little screen updates i really could go overboard with sprites/animations/etc.)
-- 010 modify lsp script to reconfigure instead of build and be able to fullclean build.clang/'s
 - 005 remove WHOLE_ARCHIVE from engine/test/CMakeLists.txt and see if it still works lol
+- 005 make the driver work with SPI too

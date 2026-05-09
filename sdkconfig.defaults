@@ -1,54 +1,9 @@
 # This file was generated using idf.py save-defconfig or menuconfig [D] key. It can be edited manually.
 # Espressif IoT Development Framework (ESP-IDF) 6.0.1 Project Minimal Configuration
 #
-
-#
-# Serial flasher config
-#
 CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
-# end of Serial flasher config
-
-#
-# Compiler options
-#
 CONFIG_COMPILER_ORPHAN_SECTIONS_WARNING=y
-# end of Compiler options
-
-#
-# Component config
-#
-
-#
-# Power Management
-#
 CONFIG_PM_SLEEP_FUNC_IN_IRAM=y
-# end of Power Management
-
-#
-# FreeRTOS
-#
-
-#
-# Port
-#
 CONFIG_FREERTOS_IN_IRAM=y
-# end of Port
-# end of FreeRTOS
-
-#
-# SPI Flash driver
-#
-
-#
-# Auto-detect flash chips
-#
 CONFIG_SPI_FLASH_SUPPORT_BOYA_CHIP=y
-# end of Auto-detect flash chips
-# end of SPI Flash driver
-
-#
-# ILI9486 LCD Display Driver
-#
 CONFIG_ILI9486_CLOCK_HZ=13250000
-# end of ILI9486 LCD Display Driver
-# end of Component config

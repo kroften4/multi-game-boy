@@ -37,11 +37,7 @@ The following steps are required only if you plan to use clangd LSP server.
    This will install a specific clang version suitable for ESP-IDF.
 1. Run
    ```sh
-   source scripts/lsp.sh
-   ```
-   or 
-   ```fish
-   source scripts/lsp.fish
+   idf.py --preset clangd reconfigure
    ```
    This will generate `build.clang/compile_commands.json` which is used by
    clangd LSP server.
@@ -55,30 +51,59 @@ or, if you use fish:
 ```sh
 source scripts/export.fish
 ``` 
+### General commands
 
+- Set target
+  ```bash
+  idf.py set-target esp32
+  ```
 - Compile the project
-    ```bash
-    idf.py build
-    ```
+  ```bash
+  idf.py build
+  ```
 - Clean build outputs
-    ```bash
-    idf.py clean
-    ```
-    ```bash
-    idf.py fullclean
-    ```
+  ```bash
+  idf.py clean
+  ```
+  ```bash
+  idf.py fullclean
+  ```
 - Flash the chip (also builds if necessary)
-    ```bash
-    idf.py flash
-    ```
+  ```bash
+  idf.py flash
+  ```
 - USB monitor (`C-]` to quit)
-    ```bash
-    idf.py monitor
-    ```
+  ```bash
+  idf.py monitor
+  ```
 - Flash and monitor
-    ```bash
-    idf.py flash monitor
-    ```
+  ```bash
+  idf.py flash monitor
+  ```
+
+### Presets
+Presets are defined in `CMakeLists.json`. They use different build directories
+for different purposes.
+- Build for linux target (uses sdkconfig.defaults.linux)
+  ```sh
+  # sets PATH with appropriate tools for building for linux
+  source ./scripts/set_target_linux.sh # (or .fish)
+  # Change sdkconfig's IDF_TARGET
+  # (I should maybe make it use a different sdkconfig for linux target somehow)
+  idf.py --preview set-target linux
+  idf.py --preset linux build monitor
+  # reset PATH
+  source ./scripts/reset_target_linux.sh # (or .fish)
+  ```
+- Generate clang compilation database for LSP server
+  ```sh
+  idf.py --preset clangd reconfigure
+  ```
+- Other targets
+  ```sh
+  # use sdkconfig.defaults.debug and a separate build.debug/ build directory
+  idf.py --preset debug flash monitor 
+  ```
 
 ## Test
 ### Register
@@ -150,12 +175,11 @@ idf.py menuconfig
 ```
 The changes will be saved locally
 
-`sdkconfig.defaults*` files specify default options for `sdkconfig`. If changed,
-remove `sdkconfig` file and rebuild to apply changes.
+`sdkconfig.defaults*` files specify changes from default options for
+`sdkconfig`. If changed, remove `sdkconfig` file and rebuild to apply changes.
 
-`sdkconfig.defaults.<target>` where `<target>` is from `idf.py set-target` (e.
-g. `esp32`) apply when building for the specified target and override
-`sdkconfig.defaults` settings
+`sdkconfig.defaults.*` files are used by different build presets in
+`CMakePresets.json`.
 
 ### Miscellaneous
 - Create component
@@ -164,8 +188,3 @@ g. `esp32`) apply when building for the specified target and override
   ```
   It is important to put all components in `components/` directory, otherwise
   they are not recognized
-
-- Set target
-  ```sh
-  idf.py set-target esp32
-  ```

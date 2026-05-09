@@ -1,0 +1,39 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "dev",
+            "binaryDir": "build"
+        },
+        {
+            "name": "debug",
+            "binaryDir": "build.debug",
+            "cacheVariables": {
+                "SDKCONFIG_DEFAULTS": "sdkconfig.defaults;sdkconfig.defaults.debug"
+            }
+        },
+        {
+            "name": "prod",
+            "binaryDir": "build.prod",
+            "cacheVariables": {
+                "SDKCONFIG_DEFAULTS": "sdkconfig.defaults;sdkconfig.defaults.prod"
+            }
+        },
+        {
+            "name": "clangd",
+            "binaryDir": "build.clang",
+            "cacheVariables": {
+                "IDF_TARGET": "esp32",
+                "IDF_TOOLCHAIN": "clang"
+            }
+        },
+        {
+            "name": "linux",
+            "binaryDir": "build.linux",
+            "cacheVariables": {
+                "IDF_TARGET": "linux",
+                "SDKCONFIG_DEFAULTS": "sdkconfig.defaults;sdkconfig.defaults.linux"
+            }
+        }
+    ]
+}

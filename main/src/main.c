@@ -6,7 +6,7 @@ static const char *TAG = "main";
 
 void app_main(void)
 {
-	int ret = client_main("dummy", "7878");
+	int ret = client_main("localhost", "8889");
 	if (ret != 0) {
 		ESP_LOGE(TAG, "client_main exited with code %d", ret);
 		return;

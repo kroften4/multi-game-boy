@@ -16,7 +16,7 @@ struct vec world_to_screen_coords(struct vec screen_pos,
 
 pixel_t *bitmap_get_coord(struct bitmap *bmp, size_t x, size_t y)
 {
-	// ESP_LOGI(TAG, "%zu;%zu in %zu;%zu", x, y, bmp->size_x, bmp->size_y);
+	ESP_LOGD(TAG, "%zu;%zu in %zu;%zu", x, y, bmp->size_x, bmp->size_y);
 	assert(x < bmp->size_x && y < bmp->size_y);
 	size_t idx = bmp->size_x * y + x;
 	assert(idx < bmp->size_x * bmp->size_y);
@@ -40,8 +40,8 @@ void rast_fillrect(struct bitmap *bmp, uint32_t x, uint32_t y, uint32_t w,
 		y2 = bmp->size_y;
 	// if (y1 < 0)
 	// 	y1 = 0;
-	// ESP_LOGI(TAG, "Restricted rect: %zu;%zu - %zu;%zu -> %zu;%zu - %zu;%zu", x,
-	// 		 y, w, h, x1, y1, x2 - x1, y2 - y1);
+	ESP_LOGD(TAG, "Restricted rect: %zu;%zu - %zu;%zu -> %zu;%zu - %zu;%zu", x,
+			 y, w, h, x1, y1, x2 - x1, y2 - y1);
 	w = x2 - x1;
 	h = y2 - y1;
 
