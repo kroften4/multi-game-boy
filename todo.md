@@ -1,7 +1,7 @@
 :!sort -r
-- 100 pong port: drawing is weird; add inputs
+- 100 pong port: add inputs
+- 100 figure out WIFI (connect in project main, check that connected in game main)
 - 095 add menu and port server
-- 095 figure out WIFI (connect in project main, check that connected in game main)
 - 070 add circular buffering for DMA
 - 040 steal clang config from esp idf
 - 030 lsp auto completion system includes do not use angle braces

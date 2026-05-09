@@ -82,7 +82,7 @@ source scripts/export.fish
   ```
 
 ### Presets
-Presets are defined in `CMakeLists.json`. They use different build directories
+Presets are defined in `CMakePresets.json`. They use different build directories
 for different purposes.
 - Build for linux target (uses sdkconfig.defaults.linux)
   ```sh
