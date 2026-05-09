@@ -23,31 +23,34 @@ pixel_t *bitmap_get_coord(struct bitmap *bmp, size_t x, size_t y)
 	return &(bmp->buf[idx]);
 }
 
-void rast_fillrect(struct bitmap *bmp, uint32_t x, uint32_t y, uint32_t w,
-				   uint32_t h, pixel_t color)
+void rast_fillrect(struct bitmap *bmp, int x, int y, int w,
+				   int h, pixel_t color)
 {
-	uint32_t x1 = x;
-	uint32_t y1 = y;
-	uint32_t x2 = x + w;
-	uint32_t y2 = y + h;
-	if (x1 >= bmp->size_x || y1 >= bmp->size_y) // || x2 < 0 || y2 < 0)
+	int x1 = x;
+	int y1 = y;
+	int x2 = x + w;
+	int y2 = y + h;
+	if (x1 >= bmp->size_x || y1 >= bmp->size_y || x2 < 0 || y2 < 0) {
+		ESP_LOGD(TAG, "rect completely out of bmp (%zu;%zu): (%d;%d) - (%d;%d)",
+				 bmp->size_x, bmp->size_y, x1, y1, x2, y2);
 		return;
+	}
 	if (x2 > bmp->size_x)
 		x2 = bmp->size_x;
-	// if (x1 < 0)
-	// 	x1 = 0;
+	if (x1 < 0)
+		x1 = 0;
 	if (y2 > bmp->size_y)
 		y2 = bmp->size_y;
-	// if (y1 < 0)
-	// 	y1 = 0;
-	ESP_LOGD(TAG, "Restricted rect: %zu;%zu - %zu;%zu -> %zu;%zu - %zu;%zu", x,
+	if (y1 < 0)
+		y1 = 0;
+	ESP_LOGD(TAG, "Restricted rect: %d;%d - %d;%d -> %d;%d - %d;%d", x,
 			 y, w, h, x1, y1, x2 - x1, y2 - y1);
 	w = x2 - x1;
 	h = y2 - y1;
 
 	pixel_t *curr = bitmap_get_coord(bmp, x1, y1);
 	pixel_t *end = curr + w;
-	for (uint32_t y_curr = y1; y_curr < y2; y_curr++) {
+	for (int y_curr = y1; y_curr < y2; y_curr++) {
 		while (curr != end) {
 			*curr = color;
 			curr++;
