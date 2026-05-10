@@ -6,7 +6,6 @@ DIY Multiplayer Game Pad
 # Developing
 
 ## Install prerequisites & Configure
-TODO: clean build.clang/'s
 
 1. Install ESP-IDF
    ([guide](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html))

@@ -1,6 +1,5 @@
 :!sort -r
-- 100 pong port: add inputs
-- 100 figure out WIFI (connect in project main, check that connected in game main)
+- 100 add inputs
 - 095 add menu and port server
 - 070 add circular buffering for DMA
 - 040 steal clang config from esp idf
