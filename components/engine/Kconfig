@@ -1,0 +1,19 @@
+menu "Game Console Engine"
+
+config ENGINE_BTN_UP_GPIO
+int "Up button GPIO"
+default 22
+
+config ENGINE_BTN_DOWN_GPIO
+int "Down button GPIO"
+default 23 
+
+config ENGINE_BTN_LEFT_GPIO
+int "Left button GPIO"
+default 19
+
+config ENGINE_BTN_RIGHT_GPIO
+int "Right button GPIO"
+default 21 
+
+endmenu

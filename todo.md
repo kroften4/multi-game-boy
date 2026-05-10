@@ -1,6 +1,6 @@
 :!sort -r
-- 100 add inputs
 - 095 add menu and port server
+- 095 make it randomly crash less 
 - 070 add circular buffering for DMA
 - 040 steal clang config from esp idf
 - 030 lsp auto completion system includes do not use angle braces
