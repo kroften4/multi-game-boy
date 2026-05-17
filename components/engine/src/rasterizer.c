@@ -1,6 +1,6 @@
 #include "rasterizer.h"
-#include "esp_log.h"
 #include "vec.h"
+#include <esp_log.h>
 #include <stdint.h>
 
 static const char *TAG = "rasterizer";
@@ -23,9 +23,10 @@ pixel_t *bitmap_get_coord(struct bitmap *bmp, size_t x, size_t y)
 	return &(bmp->buf[idx]);
 }
 
-void rast_fillrect(struct bitmap *bmp, int x, int y, int w,
-				   int h, pixel_t color)
+void rast_fillrect(struct bitmap *bmp, int x, int y, int w, int h,
+				   pixel_t color)
 {
+	assert(w >= 0 && h >= 0);
 	int x1 = x;
 	int y1 = y;
 	int x2 = x + w;
@@ -43,8 +44,8 @@ void rast_fillrect(struct bitmap *bmp, int x, int y, int w,
 		y2 = bmp->size_y;
 	if (y1 < 0)
 		y1 = 0;
-	ESP_LOGD(TAG, "Restricted rect: %d;%d - %d;%d -> %d;%d - %d;%d", x,
-			 y, w, h, x1, y1, x2 - x1, y2 - y1);
+	ESP_LOGD(TAG, "Restricted rect: %d;%d - %d;%d -> %d;%d - %d;%d", x, y, w, h,
+			 x1, y1, x2 - x1, y2 - y1);
 	w = x2 - x1;
 	h = y2 - y1;
 
